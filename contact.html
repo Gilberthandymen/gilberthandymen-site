@@ -116,10 +116,15 @@
     <div class="container">
       <div class="grid-2">
         <div>
-          <div id="form-success" class="form-success" role="status">Thanks — your email app should open with the details filled in. If it doesn’t, call or email us directly.</div>
-          <form class="form-card" id="contact-form" action="/api/contact" method="post">
+          <div id="form-success" class="form-success" role="status">Thanks! We got your request and will call or email you back soon. Need us sooner? Call <a href="tel:+14805706021">(480) 570-6021</a>.</div>
+          <div id="form-error" class="form-success" role="alert" style="display:none;background:#fdecea;border-color:#e0a09a">Sorry, something went wrong sending that. Please call <a href="tel:+14805706021">(480) 570-6021</a> or email <a href="mailto:gilberthandymenservices@gmail.com">gilberthandymenservices@gmail.com</a>.</div>
+          <form class="form-card" id="contact-form" action="https://formsubmit.co/gilberthandymenservices@gmail.com" method="POST">
             <h2 style="margin-top:0">Request a quote</h2>
-            <p>This form opens your email client (mailto) with your details. A simple POST stub endpoint is also noted for future wiring.</p>
+            <p>Tell us about your project and we’ll get back to you. Prefer to talk? Call <a href="tel:+14805706021">(480) 570-6021</a>.</p>
+            <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off">
+            <input type="hidden" name="_subject" value="New quote request from gilberthandymen.com">
+            <input type="hidden" name="_template" value="table">
+            <input type="hidden" name="_captcha" value="false">
             <div class="form-group">
               <label for="name">Name *</label>
               <input id="name" name="name" type="text" required autocomplete="name">
@@ -170,7 +175,7 @@
               <textarea id="message" name="message" required placeholder="What needs fixing or installing?"></textarea>
             </div>
             <button class="btn" type="submit">Send quote request</button>
-            <p class="form-note">Or call <a href="tel:+14805706021">(480) 570-6021</a> · Endpoint stub: <code>POST /api/contact</code> (mailto used until backend is connected).</p>
+            <p class="form-note">Or call <a href="tel:+14805706021">(480) 570-6021</a></p>
           </form>
         </div>
         <div>

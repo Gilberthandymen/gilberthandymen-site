@@ -12,31 +12,29 @@
   if (form) {
     form.addEventListener("submit", function (e) {
       e.preventDefault();
-      var name = (form.querySelector('[name="name"]') || {}).value || "";
-      var phone = (form.querySelector('[name="phone"]') || {}).value || "";
-      var email = (form.querySelector('[name="email"]') || {}).value || "";
-      var city = (form.querySelector('[name="city"]') || {}).value || "";
-      var service = (form.querySelector('[name="service"]') || {}).value || "";
-      var message = (form.querySelector('[name="message"]') || {}).value || "";
-
-      var body =
-        "Name: " + name + "\n" +
-        "Phone: " + phone + "\n" +
-        "Email: " + email + "\n" +
-        "City: " + city + "\n" +
-        "Service: " + service + "\n\n" +
-        message;
-
-      var mailto =
-        "mailto:gilberthandymenservices@gmail.com" +
-        "?subject=" + encodeURIComponent("Quote request — " + (service || "Handyman")) +
-        "&body=" + encodeURIComponent(body);
-
       var success = document.getElementById("form-success");
-      if (success) success.classList.add("show");
-
-      // Stub endpoint note: opens mailto as the delivery method until a backend is wired.
-      window.location.href = mailto;
+      var errBox = document.getElementById("form-error");
+      var btn = form.querySelector('button[type="submit"]');
+      var honey = form.querySelector('[name="_honey"]');
+      if (honey && honey.value) { return; } // spam bot
+      if (errBox) errBox.style.display = "none";
+      if (btn) { btn.disabled = true; btn.textContent = "Sending…"; }
+      var data = new FormData(form);
+      fetch("https://formsubmit.co/ajax/gilberthandymenservices@gmail.com", {
+        method: "POST",
+        headers: { "Accept": "application/json" },
+        body: data
+      }).then(function (r) {
+        if (!r.ok) throw new Error("bad status");
+        return r.json();
+      }).then(function () {
+        form.reset();
+        form.style.display = "none";
+        if (success) { success.classList.add("show"); success.scrollIntoView({ behavior: "smooth", block: "center" }); }
+      }).catch(function () {
+        if (btn) { btn.disabled = false; btn.textContent = "Send quote request"; }
+        if (errBox) errBox.style.display = "block";
+      });
     });
   }
 
